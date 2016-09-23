@@ -138,7 +138,7 @@ class LogStash::Inputs::Http < LogStash::Inputs::Base
         req = lowercase_keys(req)
         body = req.delete("rack.input")
         @codecs.fetch(req["content_type"], @codec).decode(body.read) do |event|
-          event.set("host", remote_host)
+          # event.set("host", remote_host) ## removed due to collectd overlap
           event.set("headers", req)
           decorate(event)
           queue << event
